@@ -1,6 +1,30 @@
 {
     "home": "Accueil",
-    
+
+    "sidenav.main": "Principal",
+	"sidenav.main.dashboard": "Tableau de bord",
+	"sidenav.main.catalog": "Catalogue",
+	"sidenav.main.catalog.products": "Produits",
+	"sidenav.main.catalog.categories": "Catégories",
+	"sidenav.main.catalog.collections": "Collections",
+	"sidenav.main.catalog.combo": "Combo",
+	"sidenav.main.orders": "Commandes",
+	"sidenav.main.clients": "Clients",
+	"sidenav.main.clients.list": "Liste des clients",
+	"sidenav.main.clients.groups": "Groupes de clients",
+	"sidenav.main.banners": "Bannières",
+	"sidenav.main.promoсodes": "Promoсodes",
+	"sidenav.main.offlinePoints": "OfflinePoints",
+	"sidenav.main.offlinePoints.addresses": "Adresses",
+	"sidenav.main.offlinePoints.geofences": "Geofences",
+	"sidenav.main.employees": "Employés",
+	"sidenav.main.mailings": "Mailings",
+
+    "sidenav.systemic": "Systémique",
+	"sidenav.systemic.settings": "Paramètres",
+	"sidenav.systemic.mobileApp": "Application mobile",
+	"sidenav.systemic.logs": "Journaux",
+
     "sidenav.dashboard": "Tableau de bord",
     "sidenav.dashboard.default": "Défaut",
     "sidenav.dashboard.analytic": "Analytique",
