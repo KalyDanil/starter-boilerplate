@@ -4,13 +4,12 @@ import { Card, Table, Tooltip, message, Button } from 'antd';
 import { EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 import ClientView from './ClientView';
 import AvatarStatus from 'components/shared-components/AvatarStatus';
+import Loading from 'components/shared-components/Loading';
 import { deleteClientReq, getClientsListReq } from 'api/main/clientsApi';
 import { getClientsList } from 'redux/actions/main/Clients';
-import Loading from 'components/shared-components/Loading';
 
 export class ClientsList extends Component {
 	state = {
-		clientsList: [],
 		clientProfileVisible: false,
 		selectedClient: null
 	}
@@ -18,14 +17,7 @@ export class ClientsList extends Component {
 	componentDidMount() {
 		getClientsListReq().then( res => {
 			this.props.getClientsList(res);
-			this.setState({
-				clientsList: this.props.clientsList
-			})
 		})
-  }
-
-  componentWillUnmount() {
-		this.props.getClientsList(null);
   }
 
 	deleteClient = (clientId, username) => {
@@ -34,10 +26,7 @@ export class ClientsList extends Component {
 				message.error({ content: `User ${username} has not been deleted`, duration: 2 });
 				return
 			}
-			const newClientsList = this.state.clientsList.filter(item => item.id !== clientId);
-			this.setState({
-				clientsList: newClientsList,
-			})
+			const newClientsList = this.props.clientsList.filter(item => item.id !== clientId);
 			this.props.getClientsList(newClientsList);
 			message.success({ content: `Deleted user ${username}`, duration: 2 });
 		});
@@ -58,7 +47,7 @@ export class ClientsList extends Component {
 	}
 
 	render() {
-		const { clientsList, clientProfileVisible, selectedClient } = this.state;
+		const { clientProfileVisible, selectedClient } = this.state;
 		const toEditingClientProfile = (id) => {
 			window.location.href = `/app/main/clients/edit-profile:${id}`;
 		}
@@ -139,7 +128,7 @@ export class ClientsList extends Component {
 
 		return (
 			<Card bodyStyle={{'padding': '0px'}}>
-			 	<Table columns={tableColumns} dataSource={clientsList} rowKey='id' />
+			 	<Table columns={tableColumns} dataSource={this.props.clientsList} rowKey='id' />
 			 	<ClientView data={selectedClient} visible={clientProfileVisible} close={()=> {this.closeClientProfile()}}/>
 		 	</Card>
 		)

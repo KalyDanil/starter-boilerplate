@@ -1,23 +1,27 @@
 import {
-	GET_CLIENTS_LIST
+	GET_CLIENTS_LIST,
+	GET_CLIENT
 } from '../../constants/main/Clients';
 
 const initState = {
   loading: true,
   clientsList: [],
+	selectedClient: {},
 };
 
 const clients = (state = initState, action) => {
 	switch (action.type) {
 		case GET_CLIENTS_LIST:
-			let loading = false;
-			if (action.payload === null) {
-				loading = true;
-			}
 			return {
 				...state,
 				clientsList: action.payload,
-				loading,
+				loading: false,
+			}
+		case GET_CLIENT:
+			return {
+				...state,
+				selectedClient: action.payload,
+				loading: false,
 			}
 		default:
 			return state;

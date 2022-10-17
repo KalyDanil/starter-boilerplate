@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Form, Avatar, Button, Input, DatePicker, Row, Col, message, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { ROW_GUTTER } from 'constants/ThemeConstant';
 import Flex from 'components/shared-components/Flex'
+import { getClientReq } from 'api/main/clientsApi';
+import { getClient } from 'redux/actions/main/Clients';
 
 export class EditProfile extends Component {
 
@@ -20,6 +23,13 @@ export class EditProfile extends Component {
 		city: '',
 		postcode: ''
 	}
+
+	componentDidMount() {
+		const id = window.location.pathname.split(':')[1]
+		getClientReq(id).then( res => {
+			this.props.getClient(res);
+		})
+  }
 
 	getBase64(img, callback) {
 		const reader = new FileReader();
@@ -212,4 +222,13 @@ export class EditProfile extends Component {
 	}
 }
 
-export default EditProfile
+const mapStateToProps = ({clients}) => {
+	const { selectedClient } = clients;
+  return { selectedClient }
+}
+
+const mapDispatchToProps=(dispatch)=>({
+	getClient: (data) => dispatch(getClient(data))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
