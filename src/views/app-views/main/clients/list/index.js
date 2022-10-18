@@ -9,6 +9,7 @@ import { deleteClientReq, getClientsListReq } from 'api/main/clientsApi';
 import { getClientsList } from 'redux/actions/main/Clients';
 
 export class ClientsList extends Component {
+	
 	state = {
 		clientProfileVisible: false,
 		selectedClient: null
@@ -46,11 +47,12 @@ export class ClientsList extends Component {
     });
 	}
 
+	toEditingClientProfile = (id) => {
+		window.location.href = `/app/main/clients/edit-profile:${id}`;
+	}
+
 	render() {
 		const { clientProfileVisible, selectedClient } = this.state;
-		const toEditingClientProfile = (id) => {
-			window.location.href = `/app/main/clients/edit-profile:${id}`;
-		}
 		const tableColumns = [
 			{
 				title: 'Client',
@@ -61,7 +63,7 @@ export class ClientsList extends Component {
 							src={"/img/avatars/defaultAvatar.jpg"} 
 							name={record.name} 
 							subTitle={record.email}
-							onNameClick={() => toEditingClientProfile(record.id)}
+							onNameClick={() => this.toEditingClientProfile(record.id)}
 						/>
 					</div>
 				),
@@ -123,7 +125,7 @@ export class ClientsList extends Component {
 		];
 
 		if (this.props.loading) {
-			return (<Loading />)
+			return <Loading />
 		}
 
 		return (

@@ -30,3 +30,12 @@ export const getClientReq = async (clientId) => {
     message.error({ content: err.message, duration: 2 });
   }
 };
+
+export const changeClientReq = async (clientId, body) => {
+  try {
+    await api.put(`users/${clientId}`, body);
+  } catch (err) {
+    console.log(err);
+    message.error({ content: err.message, duration: 2 });
+  }
+};

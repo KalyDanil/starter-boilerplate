@@ -1,32 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Avatar, Button, Input, DatePicker, Row, Col, message, Upload } from 'antd';
+import { Form, Avatar, Button, Input, Row, Col, message, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { ROW_GUTTER } from 'constants/ThemeConstant';
 import Flex from 'components/shared-components/Flex'
-import { getClientReq } from 'api/main/clientsApi';
+import { changeClientReq, getClientReq } from 'api/main/clientsApi';
 import { getClient } from 'redux/actions/main/Clients';
+import Loading from 'components/shared-components/Loading';
 
 export class EditProfile extends Component {
 
 	avatarEndpoint = 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
 
 	state= {
-		avatarUrl: '/img/avatars/thumb-6.jpg',
-		name: 'Charlie Howard',
-		email: 'charlie.howard@themenate.com',
-		userName: 'Charlie',
-		dateOfBirth: null,
-		phoneNumber: '+44 (1532) 135 7921',
-		website: '',
-		address: '',
-		city: '',
-		postcode: ''
+		avatarUrl: '/img/avatars/defaultAvatar.jpg',
 	}
 
+	id = window.location.pathname.split(':')[1]
+
 	componentDidMount() {
-		const id = window.location.pathname.split(':')[1]
-		getClientReq(id).then( res => {
+		getClientReq(this.id).then( res => {
 			this.props.getClient(res);
 		})
   }
@@ -43,18 +36,21 @@ export class EditProfile extends Component {
 			const key = 'updatable';
 			message.loading({ content: 'Updating...', key });
 			setTimeout(() => {
-				this.setState({
+				changeClientReq(this.id, {
 					name: values.name,
+					username: values.username,
+					company: values.company,
 					email: values.email,
-					userName: values.userName,
-					dateOfBirth: values.dateOfBirth,
-					phoneNumber: values.phoneNumber,
-					website: values.website,
-					address: values.address,
+					phone: values.phone,
 					city: values.city,
-					postcode: values.postcode,
+					street: values.street,
+					suite: values.suite,
+					zipcode: values.zipcode,
+					website: values.website,
+				}).then(() => {
+					message.success({ content: 'Done!', key, duration: 2 });
+					window.location.href = `/app/main/clients/list`;
 				})
-				message.success({ content: 'Done!', key, duration: 2 });
 			}, 1000);
 		};
 	
@@ -84,12 +80,16 @@ export class EditProfile extends Component {
 			})
 		}
 
-		const { name, email, userName, dateOfBirth, phoneNumber, website, address, city, postcode, avatarUrl } = this.state;
+		const { name, username, email, address, phone, website, company } = this.props.selectedClient;
+
+		if (this.props.loading) {
+			return <Loading />
+		}
 
 		return (
 			<>
 				<Flex alignItems="center" mobileFlex={false} className="text-center text-md-left">
-					<Avatar size={90} src={avatarUrl} icon={<UserOutlined />}/>
+					<Avatar size={90} src={this.state.avatarUrl} icon={<UserOutlined />}/>
 					<div className="ml-md-3 mt-md-0 mt-3">
 						<Upload onChange={onUploadAavater} showUploadList={false} action={this.avatarEndpoint}>
 							<Button type="primary">Change Avatar</Button>
@@ -104,14 +104,15 @@ export class EditProfile extends Component {
 						initialValues={
 							{ 
 								'name': name,
+								'username': username,
+								'company': company.name,
 								'email': email,
-								'username': userName,
-								'dateOfBirth': dateOfBirth,
-								'phoneNumber': phoneNumber,
+								'phone': phone,
+								'city': address.city,
+								'street': address.street,
+								'suite': address.suite,
+								'zipcode': address.zipcode,
 								'website': website,
-								'address': address,
-								'city': city,
-								'postcode': postcode
 							}
 						}
 						onFinish={onFinish}
@@ -150,6 +151,20 @@ export class EditProfile extends Component {
 									</Col>
 									<Col xs={24} sm={24} md={12}>
 										<Form.Item
+											label="Phone"
+											name="phone"
+											rules={[
+												{
+													required: true,
+													message: 'Please input your phone!'
+												},
+											]}
+										>
+											<Input />
+										</Form.Item>
+									</Col>
+									<Col xs={24} sm={24} md={12}>
+										<Form.Item
 											label="Email"
 											name="email"
 											rules={[{ 
@@ -163,32 +178,8 @@ export class EditProfile extends Component {
 									</Col>
 									<Col xs={24} sm={24} md={12}>
 										<Form.Item
-											label="Date of Birth"
-											name="dateOfBirth"
-										>
-											<DatePicker className="w-100"/>
-										</Form.Item>
-									</Col>
-									<Col xs={24} sm={24} md={12}>
-										<Form.Item
-											label="Phone Number"
-											name="phoneNumber"
-										>
-											<Input />
-										</Form.Item>
-									</Col>
-									<Col xs={24} sm={24} md={12}>
-										<Form.Item
-											label="Website"
-											name="website"
-										>
-											<Input />
-										</Form.Item>
-									</Col>
-									<Col xs={24} sm={24} md={24}>
-										<Form.Item
-											label="Address"
-											name="address"
+											label="Company"
+											name="company"
 										>
 											<Input />
 										</Form.Item>
@@ -203,8 +194,32 @@ export class EditProfile extends Component {
 									</Col>
 									<Col xs={24} sm={24} md={12}>
 										<Form.Item
-											label="Post code"
-											name="postcode"
+											label="Street"
+											name="street"
+										>
+											<Input />
+										</Form.Item>
+									</Col>
+									<Col xs={24} sm={24} md={12}>
+										<Form.Item
+											label="Suite"
+											name="suite"
+										>
+											<Input />
+										</Form.Item>
+									</Col>
+									<Col xs={24} sm={24} md={12}>
+										<Form.Item
+											label="Zip-code"
+											name="zipcode"
+										>
+											<Input />
+										</Form.Item>
+									</Col>
+									<Col xs={24} sm={24} md={12}>
+										<Form.Item
+											label="Website"
+											name="website"
 										>
 											<Input />
 										</Form.Item>
@@ -223,8 +238,8 @@ export class EditProfile extends Component {
 }
 
 const mapStateToProps = ({clients}) => {
-	const { selectedClient } = clients;
-  return { selectedClient }
+	const { selectedClient, loading } = clients;
+  return { selectedClient, loading }
 }
 
 const mapDispatchToProps=(dispatch)=>({
