@@ -12,25 +12,25 @@ export class ClientsList extends Component {
 	state = {
 		clientProfileVisible: false,
 		selectedClient: null
-	}
+	};
 
 	componentDidMount() {
 		ClientService.getList().then( res => {
 			this.props.getClientsList(res);
-		})
-  }
+		});
+  };
 
 	deleteClient = (clientId, username) => {
 		ClientService.deleteOne(clientId).then((res) => {
 			if (!res) {
 				message.error({ content: `User ${username} has not been deleted`, duration: 2 });
-				return
+				return;
 			}
 			const newClientsList = this.props.clientsList.filter(item => item.id !== clientId);
 			this.props.getClientsList(newClientsList);
 			message.success({ content: `Deleted user ${username}`, duration: 2 });
 		});
-	}
+	};
 
 	showClientProfile = clientInfo => {
 		this.setState({
@@ -44,11 +44,11 @@ export class ClientsList extends Component {
 			clientProfileVisible: false,
 			selectedClient: null
     });
-	}
+	};
 
 	toEditingClientProfile = (id) => {
 		window.location.href = `/app/main/clients/edit-profile:${id}`;
-	}
+	};
 
 	render() {
 		const { clientProfileVisible, selectedClient } = this.state;
@@ -124,7 +124,7 @@ export class ClientsList extends Component {
 		];
 
 		if (this.props.loading) {
-			return <Loading />
+			return <Loading />;
 		}
 
 		return (
@@ -132,17 +132,17 @@ export class ClientsList extends Component {
 			 	<Table columns={tableColumns} dataSource={this.props.clientsList} rowKey='id' />
 			 	<ClientView data={selectedClient} visible={clientProfileVisible} close={()=> {this.closeClientProfile()}}/>
 		 	</Card>
-		)
+		);
 	}
-}
+};
 
 const mapStateToProps = ({clients}) => {
 	const { clientsList, loading } = clients;
-  return { clientsList, loading }
-}
+  return { clientsList, loading };
+};
 
 const mapDispatchToProps=(dispatch)=>({
 	getClientsList: (data) => dispatch(getClientsList(data))
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClientsList);

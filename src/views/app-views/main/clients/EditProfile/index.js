@@ -10,25 +10,25 @@ import Loading from 'components/shared-components/Loading';
 
 export class EditProfile extends Component {
 
-	avatarEndpoint = 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
+	avatarEndpoint = 'https://www.mocky.io/v2/5cc8019d300000980a055e76';
 
-	state= {
+	state = {
 		avatarUrl: '/img/avatars/defaultAvatar.jpg',
-	}
+	};
 
-	id = window.location.pathname.split(':')[1]
+	id = window.location.pathname.split(':')[1];
 
 	componentDidMount() {
 		ClientService.getOne(this.id).then( res => {
 			this.props.getClient(res);
 		})
-  }
+  };
 
 	getBase64(img, callback) {
 		const reader = new FileReader();
 		reader.addEventListener('load', () => callback(reader.result));
 		reader.readAsDataURL(img);
-	}
+	};
 
 	render() {
 
@@ -83,7 +83,7 @@ export class EditProfile extends Component {
 		const { name, username, email, address, phone, website, company } = this.props.selectedClient;
 
 		if (this.props.loading) {
-			return <Loading />
+			return <Loading />;
 		}
 
 		return (
@@ -235,15 +235,15 @@ export class EditProfile extends Component {
 			</>
 		)
 	}
-}
+};
 
 const mapStateToProps = ({clients}) => {
 	const { selectedClient, loading } = clients;
-  return { selectedClient, loading }
-}
+  return { selectedClient, loading };
+};
 
 const mapDispatchToProps=(dispatch)=>({
 	getClient: (data) => dispatch(getClient(data))
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);

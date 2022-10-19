@@ -7,7 +7,7 @@ const Main = ({ match }) => (
     <Switch>
       <Redirect exact from={`${match.url}`} to={`${match.url}/clients`} />
       <Route path={`${match.url}/clients`} component={lazy(() => import(`./clients`))} />
-      <Route path={`${match.url}/planner`} component={lazy(() => import(`./Planner`))} />
+      <Route path={`${match.url}/planner`} component={lazy(() => import(`./planner/Planner`))} />
     </Switch>
   </Suspense>
 );

@@ -1,12 +1,36 @@
 [
   {
-    "id": 2,
+    "id": "zasqwefqw",
     "name": "Armchair",
-    "left": 20,
+    "left": 30,
     "top": 30
   },
   {
-    "id": 1,
+    "id": "acwdsadqs",
+    "name": "Dinner table",
+    "left": 15,
+    "top": 30
+  },
+  {
+    "id": "verfwwdcwf",
+    "name": "Wooden chair",
+    "left": 60,
+    "top": 70
+  },
+  {
+    "id": "rerthrngtntgt",
+    "name": "Big table",
+    "left": 50,
+    "top": 15
+  },
+  {
+    "id": "uiujmng",
+    "name": "Cupboard",
+    "left": 40,
+    "top": 55
+  },
+  {
+    "id": "xzvbtiyukyh",
     "name": "Sofa",
     "left": 10,
     "top": 15
