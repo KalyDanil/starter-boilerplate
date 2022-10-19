@@ -5,9 +5,8 @@ import { EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 import ClientView from './ClientView';
 import AvatarStatus from 'components/shared-components/AvatarStatus';
 import Loading from 'components/shared-components/Loading';
-import { deleteClientReq, getClientsListReq } from 'api/main/clientsApi';
+import ClientService from 'services/main/ClientService';
 import { getClientsList } from 'redux/actions/main/Clients';
-
 export class ClientsList extends Component {
 	
 	state = {
@@ -16,13 +15,13 @@ export class ClientsList extends Component {
 	}
 
 	componentDidMount() {
-		getClientsListReq().then( res => {
+		ClientService.getList().then( res => {
 			this.props.getClientsList(res);
 		})
   }
 
 	deleteClient = (clientId, username) => {
-		deleteClientReq(clientId).then((res) => {
+		ClientService.deleteOne(clientId).then((res) => {
 			if (!res) {
 				message.error({ content: `User ${username} has not been deleted`, duration: 2 });
 				return

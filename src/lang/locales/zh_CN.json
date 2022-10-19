@@ -3,6 +3,7 @@
 
     "sidenav.main": "主要",
 	"sidenav.main.dashboard": "仪表板",
+    "sidenav.main.planner": "调度器",
 	"sidenav.main.catalog": "目录",
 	"sidenav.main.catalog.products": "产品",
 	"sidenav.main.catalog.categories": "类别",

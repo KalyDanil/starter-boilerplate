@@ -10,7 +10,8 @@ import {
   ShopOutlined,
   UsergroupAddOutlined,
   SettingOutlined,
-  MobileOutlined
+  MobileOutlined,
+  FormOutlined
 } from '@ant-design/icons';
 import { APP_PREFIX_PATH } from 'configs/AppConfig'
 
@@ -26,6 +27,14 @@ const mainNavTree = [{
       path: `${APP_PREFIX_PATH}/main/dashboard`,
       title: 'sidenav.main.dashboard',
       icon: DashboardOutlined,
+      breadcrumb: false,
+      submenu: []
+    },
+    {
+      key: 'main-planner',
+      path: `${APP_PREFIX_PATH}/main/planner`,
+      title: 'sidenav.main.planner',
+      icon: FormOutlined,
       breadcrumb: false,
       submenu: []
     },

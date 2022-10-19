@@ -1,0 +1,14 @@
+[
+  {
+    "id": 2,
+    "name": "Armchair",
+    "left": 20,
+    "top": 30
+  },
+  {
+    "id": 1,
+    "name": "Sofa",
+    "left": 10,
+    "top": 15
+  }
+]

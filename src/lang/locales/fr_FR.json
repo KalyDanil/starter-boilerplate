@@ -3,6 +3,7 @@
 
     "sidenav.main": "Principal",
 	"sidenav.main.dashboard": "Tableau de bord",
+    "sidenav.main.planner": "Planificateur",
 	"sidenav.main.catalog": "Catalogue",
 	"sidenav.main.catalog.products": "Produits",
 	"sidenav.main.catalog.categories": "Catégories",

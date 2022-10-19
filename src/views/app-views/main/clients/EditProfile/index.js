@@ -4,7 +4,7 @@ import { Form, Avatar, Button, Input, Row, Col, message, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { ROW_GUTTER } from 'constants/ThemeConstant';
 import Flex from 'components/shared-components/Flex'
-import { changeClientReq, getClientReq } from 'api/main/clientsApi';
+import ClientService from 'services/main/ClientService';
 import { getClient } from 'redux/actions/main/Clients';
 import Loading from 'components/shared-components/Loading';
 
@@ -19,7 +19,7 @@ export class EditProfile extends Component {
 	id = window.location.pathname.split(':')[1]
 
 	componentDidMount() {
-		getClientReq(this.id).then( res => {
+		ClientService.getOne(this.id).then( res => {
 			this.props.getClient(res);
 		})
   }
@@ -36,7 +36,7 @@ export class EditProfile extends Component {
 			const key = 'updatable';
 			message.loading({ content: 'Updating...', key });
 			setTimeout(() => {
-				changeClientReq(this.id, {
+				ClientService.editProfile(this.id, {
 					name: values.name,
 					username: values.username,
 					company: values.company,

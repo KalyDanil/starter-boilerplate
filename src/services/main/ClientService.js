@@ -1,7 +1,9 @@
 import { message } from 'antd';
-import { api } from '../index';
+import { api } from '../../api';
 
-export const getClientsListReq = async () => {
+const ClientService = {}
+
+ClientService.getList = async () => {
   try {
     const res = await api.get('users');
     return res;
@@ -11,7 +13,7 @@ export const getClientsListReq = async () => {
   }
 };
 
-export const deleteClientReq = async (clientId) => {
+ClientService.deleteOne = async (clientId) => {
   try {
     const res = await api.delete(`users/${clientId}`);
     return res;
@@ -21,7 +23,7 @@ export const deleteClientReq = async (clientId) => {
   }
 };
 
-export const getClientReq = async (clientId) => {
+ClientService.getOne = async (clientId) => {
   try {
     const res = await api.get(`users/${clientId}`);
     return res;
@@ -31,7 +33,7 @@ export const getClientReq = async (clientId) => {
   }
 };
 
-export const changeClientReq = async (clientId, body) => {
+ClientService.editProfile = async (clientId, body) => {
   try {
     await api.put(`users/${clientId}`, body);
   } catch (err) {
@@ -39,3 +41,5 @@ export const changeClientReq = async (clientId, body) => {
     message.error({ content: err.message, duration: 2 });
   }
 };
+
+export default ClientService;
